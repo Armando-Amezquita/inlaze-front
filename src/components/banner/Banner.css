@@ -1,0 +1,97 @@
+.viewtrailer__go{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 50%;
+    border-radius: 50%;
+    border: 1px solid #f0b90b;
+    background: transparent;
+}
+.viewtrailer__go svg{
+    color: #f0b90b;
+}
+.viewtrailer{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 150px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top; 
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.viewtrailer__shadow{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #333);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6), #333);
+}
+.viewtrailer__title, .viewtrailer__percent{
+    color: #fff;
+}
+
+@media (min-width: 500px) {
+    .viewtrailer{
+        min-height: 250px;
+        width: 100%;
+    }   
+    .viewtrailer__title, .viewtrailer__percent{
+        font-size: 24px;
+        font-weight: bold;
+    } 
+    .viewtrailer__go{
+        width: 40px;
+        height: 40px;
+    }
+    .viewtrailer__go svg{
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: 720px) {
+    .viewtrailer{
+        min-height: 300px;
+        width: 100%;
+    } 
+}
+
+@media (min-width: 1024px) {
+    .viewtrailer{
+        min-height: 450px;
+        width: 100%;
+    } 
+    .viewtrailer__shadow{
+        padding: 20px;
+    }
+    .viewtrailer__title, .viewtrailer__percent{
+        font-size: 30px;
+        font-weight: bold;
+    } 
+    .viewtrailer__go{
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    .viewtrailer__go svg{
+        width: 50px;
+        height: 50px;
+    }
+}
