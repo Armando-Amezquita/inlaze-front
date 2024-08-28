@@ -7,6 +7,26 @@ import { FaCirclePlay } from "react-icons/fa6";
 import "./post.css"
 import YouTube from "react-youtube";
 
+interface Genre {
+  id: number;
+  name: string;
+}
+
+interface Movie {
+  title: string;
+  loading: boolean;
+  poster_path?: string;
+  backdrop_path?: string;
+  overview?: string;
+  vote_average?: number;
+  genres?: Genre[];
+}
+
+interface Trailer {
+  key: string;
+}
+
+
 const IMAGE_PATH = 'https://image.tmdb.org/t/p/original';
 const MoviePage = () => {
     const {
@@ -92,7 +112,7 @@ const MoviePage = () => {
                 </div>
                 <div className="viewtrailerDetails__genreContent">
                     {
-                        movie.genres.map((item: any) => (
+                        movie?.genres?.map((item: any) => (
                             <p className="viewtrailerDetails__genre" key={item.id}>
                                 {item.name}
                             </p>

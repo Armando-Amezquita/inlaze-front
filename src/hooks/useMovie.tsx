@@ -3,14 +3,42 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 
+interface Genre {
+  id: number;
+  name: string;
+}
+
+interface Movie {
+  title: string;
+  loading: boolean;
+  poster_path?: string;
+  backdrop_path?: string;
+  overview?: string;
+  vote_average?: number;
+  genres?: Genre[];
+}
+
+interface Trailer {
+  key: string;
+}
+
+
 export const useMovie = () => {
 
   const API_URL = 'https://api.themoviedb.org/3/movie/';
   const API_KEY = 'ddf17c3a5b653c45486fa621d3dc3b91';
 
-  const [trailer, setTrailer] = useState()
-  const [movie, setMovie] = useState({ title: 'Loading...', loading: true})
-  const [playing, setPlaying] = useState(false)
+  const [playing, setPlaying] = useState(false);
+  const [trailer, setTrailer] = useState<Trailer | null>(null);
+  const [movie, setMovie] = useState<Movie>({
+    title: "Loading...",
+    loading: true,
+    poster_path: "",
+    backdrop_path: "",
+    overview: "",
+    vote_average: 0,
+    genres: [],
+  });
 
   const params = useParams();
 
