@@ -4,27 +4,27 @@ import Navbar from '@/components/navbar/Navbar';
 import Banner from '@/components/banner/Banner';
 import Movies from '@/components/movies/Movies';
 
-
 export default function HomePage() {
 
   const { 
     //Properties
     movies,
-    trailer,
     movie,
-    playing,
     genres,
-    selectedGenres,
+    page,
+    searchKey,
 
     //Methods
     handleSelectGenre,
-    selectMovie } = useHomePage();  
+    selectMovie,
+    handlePage,
+    searchMovies } = useHomePage();  
 
   return (
     <>
-    <Navbar genres={genres} handleSelectGenre={handleSelectGenre} />
+    <Navbar genres={genres} handleSelectGenre={handleSelectGenre} searchMovies={searchMovies} searchKey={searchKey}/>
     <Banner movie={movie} />
-    <Movies movies={movies} selectMovie={selectMovie} />
+    <Movies movies={movies} selectMovie={selectMovie} handlePage={handlePage} page={page}/>
     </>
   );
 }

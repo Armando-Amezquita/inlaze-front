@@ -4,40 +4,45 @@ import axios from 'axios';
 
 export const useHomePage = () => {
 
-// import "react-multi-carousel/lib/styles.css";
-// import './home.css';
-// // const APIURL = "https://api.themoviedb.org/3/movie/changes?page=1"
-// // const APIURL = "https://api.themoviedb.org/3"
-// // const APIKEY = "ddf17c3a5b653c45486fa621d3dc3b91"
-// // const IMAGEPATH = "https://image.tmdb.org/t/"
-// // const URLIMAGE = "https://image.tmdb.org/t/"
-
   const API_URL = 'https://api.themoviedb.org/3';
   const API_KEY = 'ddf17c3a5b653c45486fa621d3dc3b91';
   const IMAGE_PATH = 'https://image.tmdb.org/t/p/original';
   const URL_IMAGE = 'https://image.tmdb.org/t/p/original';
-  const GENRES = "https://api.themoviedb.org/3/genre/movie/list?language=es"
+  const GENRES = "https://api.themoviedb.org/3/genre/movie/list?language=en"
   const MOVIES_URL = API_URL + '/discover/movie?sort_by=popularity.desc&' + API_KEY;
-
-
   const [movies, setMovies] = useState([])
   const [trailer, setTrailer] = useState()
-  const [movie, setMovie] = useState({ title: 'Loading Movies'})
-  const [playing, setPlaying] = useState(false)
+  const [movie, setMovie] = useState({ title: 'Loading...', loading: true})
   const [genres, setGenres] = useState([])
   const [selectedGenres, setSelectedGenres] = useState(null)
+  const [page, setPage] = useState<number>(1)
+  const [lastUrl, setLastUrl] = useState('')
+  const [searchKey, setSearchKey] = useState('');
 
-  const fetchMovies = async(url: string) =>{
-    const { data: { results }} = await axios.get(url, {
+
+
+  const fetchMovies = async(url: string, query = '') =>{
+    setLastUrl(url)
+    const { data } = await axios.get(url, {
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZGYxN2MzYTViNjUzYzQ1NDg2ZmE2MjFkM2RjM2I5MSIsIm5iZiI6MTcyNDY4OTk1OS44MzI4NDIsInN1YiI6IjYyY2RmMDg3YmRjMzRjMDA1NDMyMTY0YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CsAm22OwdgsWBR90Rw5hxR3CX4T4pD56b-8EXqYyKmE'
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZGYxN2MzYTViNjUzYzQ1NDg2ZmE2MjFkM2RjM2I5MSIsIm5iZiI6MTcyNDY4OTk1OS44MzI4NDIsInN1YiI6IjYyY2RmMDg3YmRjMzRjMDA1NDMyMTY0YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CsAm22OwdgsWBR90Rw5hxR3CX4T4pD56b-8EXqYyKmE',
+      },
+      params: {
+        api_key: API_KEY,
+        query
       }
     })
+
+    const { results } = data;
+
     setMovies(results)
-    setMovie(results[0])
+    setPage(data.page)
     if(results.length){
+      setMovie(results[0])
       await fetchMovie(results[0].id)
+    }else{
+      setMovie({title: 'Movies not found', loading: true})
     }
   }
 
@@ -48,21 +53,19 @@ export const useHomePage = () => {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZGYxN2MzYTViNjUzYzQ1NDg2ZmE2MjFkM2RjM2I5MSIsIm5iZiI6MTcyNDY4OTk1OS44MzI4NDIsInN1YiI6IjYyY2RmMDg3YmRjMzRjMDA1NDMyMTY0YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CsAm22OwdgsWBR90Rw5hxR3CX4T4pD56b-8EXqYyKmE'
       }
     })
-    console.log('data', data)
     setGenres(data.genres)
   }
 
   const selectMovie = async(movie) => {
-    console.log('movie', movie)
     fetchMovie(movie.id)
     setMovie(movie)
     window.scrollTo(0,0)
   }
 
-//   const searchMovies = (e) => {
-//     e.preventDefault();
-//     fetchMovies(searchKey)
-//   } 
+  const searchMovies = async (value) => {
+    setSearchKey(value)
+    value.length > 0 ? fetchMovies(`${API_URL}/search/movie`, value) : fetchMovies(MOVIES_URL)
+  } 
 
   const fetchMovie = async(id) => {
     const { data } = await axios.get(`${API_URL}/movie/${id}`, {
@@ -89,18 +92,25 @@ export const useHomePage = () => {
     fetchMovies(MOVIES_URL + '&with_genres=' + genre.id)
   }
 
+  const handlePage = (pag) => {
+    if(pag <= 0 ) return 
+    searchKey.length > 0 ? fetchMovies(`${API_URL}/search/movie?${searchKey}&page=${pag}`, searchKey) : fetchMovies(`${lastUrl}&page=${pag}`);
+  }
 
   return {
     //Properties
     movies,
     trailer,
     movie,
-    playing,
     genres,
     selectedGenres,
+    page,
+    searchKey,
 
     //Methods
     handleSelectGenre,
-    selectMovie
+    selectMovie,
+    handlePage,
+    searchMovies
   }
 }

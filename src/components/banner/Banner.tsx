@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link';
 import { BsArrowRightShort } from "react-icons/bs"
 import './Banner.css'
 
@@ -18,65 +19,29 @@ export default function Banner ({movie}: Props) {
     }
 
   return (
-    
-    <section>
+    <>
     {
-      movie && ( 
-        <div className='viewtrailer' 
-          style={{backgroundImage: `url("${IMAGE_PATH}${movie?.backdrop_path}")`}}
-        >
-          <div className='viewtrailer__shadow'>
-            <p className='viewtrailer__title'>{movie.title}</p>
-            <span className='viewtrailer__percent'>{calculatePercentage(movie?.vote_average)}</span>
-            <button className='viewtrailer__go'>
-              <BsArrowRightShort />
-            </button>
+      !movie.loading ? ( 
+        <Link href={`/post/${movie.id}`}>
+          <div className='viewtrailer' 
+            style={{backgroundImage: `url("${IMAGE_PATH}${movie?.backdrop_path}")`}}
+          >
+            <div className='viewtrailer__shadow'>
+              <p className='viewtrailer__title'>{movie.title}</p>
+              <span className='viewtrailer__percent'>{calculatePercentage(movie?.vote_average)}</span>
+              <button className='viewtrailer__go'>
+                <BsArrowRightShort />
+              </button>
+            </div>
           </div>
-          {/* {
-            playing? (
-              <>
-                <YouTube 
-                  videoId={trailer?.key}
-                  className='reproductor container'
-                  containerClassName={'youtube-container amru'}
-                  opts={{
-                    width: '100%',
-                    height: '100%',
-                    playerVars: {
-                      autoplay: 1,
-                      controls: 0,
-                      cc_load_policy: 0,
-                      fs: 0, 
-                      iv_load_policy: 0,
-                      modestbranding: 0,
-                      rel: 0,
-                      showinfo: 0
-                    }
-                  }}
-                />
-                <button onClick={() => setPlaying(false)} className='btn-style btn btn-dark'>
-                  Cerrar
-                </button>
-              </>
-            ) : (
-              <div className=''>
-                <div>
-                  { 
-                    trailer ? (
-                      <button onClick={() => setPlaying(true)} className='btn-style btn btn-dark'> 
-                        Play
-                      </button>
-                    ) : (
-                      'No hay trailer disponible'
-                    )
-                  }
-                </div>
-              </div>
-            )
-          } */}
+        </Link>
+      ): 
+      (
+        <div>
+          <p className='movie__loading'>{movie.title}</p>
         </div>
       )
     }
-  </section>
+    </>
   )
 }

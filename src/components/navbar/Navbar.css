@@ -33,6 +33,11 @@ header{
 .search__text{
     background: transparent;
     border: none;
+    color: #fff;
+}
+.search__text:focus{
+    border: none;
+    outline: none;
 }
 .tags{
     display: flex;
