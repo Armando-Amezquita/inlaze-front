@@ -5,9 +5,12 @@ import axios from 'axios';
 export const useHomePage = () => {
 
   const API_URL = 'https://api.themoviedb.org/3';
+  // const API_URL =  process.env.NEXT_PUBLIC_API_URL;
   const API_KEY = 'ddf17c3a5b653c45486fa621d3dc3b91';
   const GENRES = "https://api.themoviedb.org/3/genre/movie/list?language=en"
   const MOVIES_URL = API_URL + '/discover/movie?sort_by=popularity.desc&' + API_KEY;
+
+
   const [movies, setMovies] = useState([])
   const [trailer, setTrailer] = useState()
   const [movie, setMovie] = useState({ title: 'Loading...', loading: true})

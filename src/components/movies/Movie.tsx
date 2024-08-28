@@ -23,7 +23,7 @@ export default function Movie( { movie, selectMovie } : Props) {
         className="card-movies" 
         onClick={() => selectMovie(movie)}
     >
-        <img src={`${URL_IMAGE + movie.poster_path}`} 
+        <img src={`${URL_IMAGE + movie?.poster_path}`} 
             alt='Img' 
             className='card__image'
         />
