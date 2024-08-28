@@ -7,10 +7,23 @@ html, * {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: auto;
 }
 
 body{
   background-color: #131722;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button{
+  width: auto;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+input:focus{
+  border: none;
+  outline: none;
 }
 

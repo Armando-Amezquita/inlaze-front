@@ -6,8 +6,6 @@ export const useHomePage = () => {
 
   const API_URL = 'https://api.themoviedb.org/3';
   const API_KEY = 'ddf17c3a5b653c45486fa621d3dc3b91';
-  const IMAGE_PATH = 'https://image.tmdb.org/t/p/original';
-  const URL_IMAGE = 'https://image.tmdb.org/t/p/original';
   const GENRES = "https://api.themoviedb.org/3/genre/movie/list?language=en"
   const MOVIES_URL = API_URL + '/discover/movie?sort_by=popularity.desc&' + API_KEY;
   const [movies, setMovies] = useState([])
@@ -18,8 +16,7 @@ export const useHomePage = () => {
   const [page, setPage] = useState<number>(1)
   const [lastUrl, setLastUrl] = useState('')
   const [searchKey, setSearchKey] = useState('');
-
-
+  const [showModal, setShowModal] = useState<boolean>(false)
 
   const fetchMovies = async(url: string, query = '') =>{
     setLastUrl(url)
@@ -81,12 +78,7 @@ export const useHomePage = () => {
     }
     setMovie(data)
   }
-
-  useEffect(() => {
-    fetchMovies(MOVIES_URL)
-    fetchGenres()
-  }, [])
-
+  
   const handleSelectGenre = (genre) => {
     setSelectedGenres(genre.id)
     fetchMovies(MOVIES_URL + '&with_genres=' + genre.id)
@@ -97,6 +89,17 @@ export const useHomePage = () => {
     searchKey.length > 0 ? fetchMovies(`${API_URL}/search/movie?${searchKey}&page=${pag}`, searchKey) : fetchMovies(`${lastUrl}&page=${pag}`);
   }
 
+  const handleModal = () => {
+    setShowModal(!showModal)
+  }
+
+  useEffect(() => {
+    fetchMovies(MOVIES_URL)
+    fetchGenres()
+  }, [])
+
+
+
   return {
     //Properties
     movies,
@@ -106,11 +109,13 @@ export const useHomePage = () => {
     selectedGenres,
     page,
     searchKey,
+    showModal,
 
     //Methods
     handleSelectGenre,
     selectMovie,
     handlePage,
-    searchMovies
+    searchMovies,
+    handleModal
   }
 }

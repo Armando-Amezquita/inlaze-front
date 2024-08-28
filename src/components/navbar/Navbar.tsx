@@ -1,5 +1,5 @@
 "use client";
-import "./Navbar.css";
+import { useRouter } from "next/navigation";
 import Image from 'next/image';
 import { HiUserCircle } from "react-icons/hi2";
 import { RiSearchLine } from "react-icons/ri";
@@ -11,17 +11,28 @@ interface Props {
   view?: string;
   handleSelectGenre?: (item: any) => void;
   searchMovies?: (value: string) => void;
-  searchKey: string;
+  handleModal?: () => void;
+  searchKey?: string;
 }
 
-export default function Navbar({ genres, view, handleSelectGenre, searchMovies, searchKey="" } : Props){
+export default function Navbar({ genres, view, handleSelectGenre, searchMovies, searchKey="", handleModal } : Props){
+
+  const router = useRouter();
+  const goHome = () => {
+    router.push('/home')
+}
 
   return (
     <header className='header'>
       <nav className='nav' >
         <div className='nav__content'>
-          <Image src={Logo} alt='' className='nav__content--logo' />
-          <HiUserCircle className='nav__content--profile'/>
+          <button onClick={goHome}>
+            <Image src={Logo} alt='' className='nav__content--logo' />
+          </button>
+
+          <button onClick={handleModal} className="nav__content--action">
+            <HiUserCircle className='nav__content--profile'/>
+          </button>
         </div>
 
         {

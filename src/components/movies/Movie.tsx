@@ -1,6 +1,5 @@
 import React from 'react'
 import { LiaHeartSolid } from "react-icons/lia";
-// import './Movies.css'
 
 interface Props {
     movie: any;

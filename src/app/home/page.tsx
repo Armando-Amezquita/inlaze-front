@@ -3,6 +3,7 @@ import { useHomePage } from '@/hooks/useHomePage';
 import Navbar from '@/components/navbar/Navbar';
 import Banner from '@/components/banner/Banner';
 import Movies from '@/components/movies/Movies';
+import ModalLoginSignUp from '@/components/modal_login_signup/ModalLoginSignUp';
 
 export default function HomePage() {
 
@@ -13,18 +14,21 @@ export default function HomePage() {
     genres,
     page,
     searchKey,
+    showModal,
 
     //Methods
     handleSelectGenre,
     selectMovie,
     handlePage,
-    searchMovies } = useHomePage();  
+    searchMovies,
+    handleModal } = useHomePage();  
 
   return (
     <>
-    <Navbar genres={genres} handleSelectGenre={handleSelectGenre} searchMovies={searchMovies} searchKey={searchKey}/>
+    <Navbar genres={genres} handleSelectGenre={handleSelectGenre} searchMovies={searchMovies} searchKey={searchKey} handleModal={handleModal}/>
     <Banner movie={movie} />
     <Movies movies={movies} selectMovie={selectMovie} handlePage={handlePage} page={page}/>
+    <ModalLoginSignUp showModal={showModal} handleModal={handleModal} />
     </>
   );
 }

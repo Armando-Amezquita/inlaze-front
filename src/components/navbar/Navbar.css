@@ -58,7 +58,9 @@ header{
     border: none;
     cursor: pointer;
 }
-
+.nav__content--action{
+    color: #fff;
+}
 
 @media (min-width: 720px) {
     .nav__content--logo {
