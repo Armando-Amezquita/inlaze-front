@@ -15,7 +15,7 @@ interface Props {
   searchKey?: string;
 }
 
-export default function Navbar({ genres, view, handleSelectGenre, searchMovies, searchKey="", handleModal } : Props){
+export default function Navbar({ genres, view, handleSelectGenre, searchMovies = () => {}, searchKey="", handleModal } : Props){
 
   const router = useRouter();
   const goHome = () => {
@@ -46,7 +46,7 @@ export default function Navbar({ genres, view, handleSelectGenre, searchMovies, 
             <div className='tags'>
               {
                 genres && genres.map((item: any) => (
-                  <button onClick={() => handleSelectGenre(item)} key={item.name} className='tags__tag'>{item.name}</button>
+                  <button onClick={() => handleSelectGenre?.(item)} key={item.name} className='tags__tag'>{item.name}</button>
                 )
               )
             }
