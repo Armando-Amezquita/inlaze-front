@@ -7,25 +7,6 @@ import { FaCirclePlay } from "react-icons/fa6";
 import "./post.css"
 import YouTube from "react-youtube";
 
-interface Genre {
-  id: number;
-  name: string;
-}
-
-interface Movie {
-  title: string;
-  loading: boolean;
-  poster_path?: string;
-  backdrop_path?: string;
-  overview?: string;
-  vote_average?: number;
-  genres?: Genre[];
-}
-
-interface Trailer {
-  key: string;
-}
-
 
 const IMAGE_PATH = 'https://image.tmdb.org/t/p/original';
 const MoviePage = () => {
@@ -51,14 +32,14 @@ const MoviePage = () => {
     {
       !movie.loading ? ( 
           <div className='viewtrailerDetails' 
-            style={{backgroundImage: `url("${IMAGE_PATH}${movie?.poster_path}")`}}
+            style={{backgroundImage: `url("${IMAGE_PATH}${movie.poster_path}")`}}
           >
             <div className='viewtrailerDetails__shadow'>
                 <button onClick={goBack} className="viewtrailerDetails__goBack">
                     <IoIosArrowBack className="viewtrailerDetails__back" />
                 </button>
                 <p className='viewtrailerDetails__title'>{movie.title}</p>
-                <div className='viewtrailerDetailsVideo'  style={{backgroundImage: `url("${IMAGE_PATH}${movie?.backdrop_path}")`}}>
+                <div className='viewtrailerDetailsVideo'  style={{backgroundImage: `url("${IMAGE_PATH}${movie.backdrop_path}")`}}>
                     {
                     playing? (
                         <>
